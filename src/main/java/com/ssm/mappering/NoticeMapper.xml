@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.dao.NoticeMapper" >
+  <resultMap id="BaseResultMap" type="com.ssm.model.Notice" >
+    <id column="NOTICE_ID" property="noticeId" jdbcType="INTEGER" />
+    <result column="USER_ID" property="userId" jdbcType="VARCHAR" />
+    <result column="NOTICE_SCOPE" property="noticeScope" jdbcType="VARCHAR" />
+    <result column="NOTICE_TITLE" property="noticeTitle" jdbcType="VARCHAR" />
+    <result column="NOTICE_CONT" property="noticeCont" jdbcType="VARCHAR" />
+    <result column="NOTICE_TIME" property="noticeTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    NOTICE_ID, USER_ID, NOTICE_SCOPE, NOTICE_TITLE, NOTICE_CONT, NOTICE_TIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ssm.model.NoticeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from notice
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from notice
+    where NOTICE_ID = #{noticeId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from notice
+    where NOTICE_ID = #{noticeId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ssm.model.NoticeExample" >
+    delete from notice
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ssm.model.Notice" >
+    insert into notice (NOTICE_ID, USER_ID, NOTICE_SCOPE, 
+      NOTICE_TITLE, NOTICE_CONT, NOTICE_TIME
+      )
+    values (#{noticeId,jdbcType=INTEGER}, #{userId,jdbcType=VARCHAR}, #{noticeScope,jdbcType=VARCHAR}, 
+      #{noticeTitle,jdbcType=VARCHAR}, #{noticeCont,jdbcType=VARCHAR}, #{noticeTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ssm.model.Notice" >
+    insert into notice
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="noticeId != null" >
+        NOTICE_ID,
+      </if>
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+      <if test="noticeScope != null" >
+        NOTICE_SCOPE,
+      </if>
+      <if test="noticeTitle != null" >
+        NOTICE_TITLE,
+      </if>
+      <if test="noticeCont != null" >
+        NOTICE_CONT,
+      </if>
+      <if test="noticeTime != null" >
+        NOTICE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="noticeId != null" >
+        #{noticeId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="noticeScope != null" >
+        #{noticeScope,jdbcType=VARCHAR},
+      </if>
+      <if test="noticeTitle != null" >
+        #{noticeTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="noticeCont != null" >
+        #{noticeCont,jdbcType=VARCHAR},
+      </if>
+      <if test="noticeTime != null" >
+        #{noticeTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ssm.model.NoticeExample" resultType="java.lang.Integer" >
+    select count(*) from notice
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update notice
+    <set >
+      <if test="record.noticeId != null" >
+        NOTICE_ID = #{record.noticeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null" >
+        USER_ID = #{record.userId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.noticeScope != null" >
+        NOTICE_SCOPE = #{record.noticeScope,jdbcType=VARCHAR},
+      </if>
+      <if test="record.noticeTitle != null" >
+        NOTICE_TITLE = #{record.noticeTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.noticeCont != null" >
+        NOTICE_CONT = #{record.noticeCont,jdbcType=VARCHAR},
+      </if>
+      <if test="record.noticeTime != null" >
+        NOTICE_TIME = #{record.noticeTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update notice
+    set NOTICE_ID = #{record.noticeId,jdbcType=INTEGER},
+      USER_ID = #{record.userId,jdbcType=VARCHAR},
+      NOTICE_SCOPE = #{record.noticeScope,jdbcType=VARCHAR},
+      NOTICE_TITLE = #{record.noticeTitle,jdbcType=VARCHAR},
+      NOTICE_CONT = #{record.noticeCont,jdbcType=VARCHAR},
+      NOTICE_TIME = #{record.noticeTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ssm.model.Notice" >
+    update notice
+    <set >
+      <if test="userId != null" >
+        USER_ID = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="noticeScope != null" >
+        NOTICE_SCOPE = #{noticeScope,jdbcType=VARCHAR},
+      </if>
+      <if test="noticeTitle != null" >
+        NOTICE_TITLE = #{noticeTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="noticeCont != null" >
+        NOTICE_CONT = #{noticeCont,jdbcType=VARCHAR},
+      </if>
+      <if test="noticeTime != null" >
+        NOTICE_TIME = #{noticeTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where NOTICE_ID = #{noticeId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ssm.model.Notice" >
+    update notice
+    set USER_ID = #{userId,jdbcType=VARCHAR},
+      NOTICE_SCOPE = #{noticeScope,jdbcType=VARCHAR},
+      NOTICE_TITLE = #{noticeTitle,jdbcType=VARCHAR},
+      NOTICE_CONT = #{noticeCont,jdbcType=VARCHAR},
+      NOTICE_TIME = #{noticeTime,jdbcType=TIMESTAMP}
+    where NOTICE_ID = #{noticeId,jdbcType=INTEGER}
+  </update>
+</mapper>

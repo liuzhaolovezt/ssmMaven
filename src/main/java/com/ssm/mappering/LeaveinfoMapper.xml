@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.dao.LeaveinfoMapper" >
+  <resultMap id="BaseResultMap" type="com.ssm.model.Leaveinfo" >
+    <id column="LEAVE_ID" property="leaveId" jdbcType="INTEGER" />
+    <result column="PASS_ID" property="passId" jdbcType="INTEGER" />
+    <result column="USER_ID" property="userId" jdbcType="VARCHAR" />
+    <result column="DUSER_ID" property="duserId" jdbcType="VARCHAR" />
+    <result column="LEAVE_STARTTIME" property="leaveStarttime" jdbcType="TIMESTAMP" />
+    <result column="LEAVE_ENDTIME" property="leaveEndtime" jdbcType="TIMESTAMP" />
+    <result column="LEAVE_REASON" property="leaveReason" jdbcType="VARCHAR" />
+    <result column="LEAVE_PASSTIME" property="leavePasstime" jdbcType="TIMESTAMP" />
+    <result column="LEAVE_PASSCONT" property="leavePasscont" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    LEAVE_ID, PASS_ID, USER_ID, DUSER_ID, LEAVE_STARTTIME, LEAVE_ENDTIME, LEAVE_REASON, 
+    LEAVE_PASSTIME, LEAVE_PASSCONT
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ssm.model.LeaveinfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from leaveinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from leaveinfo
+    where LEAVE_ID = #{leaveId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from leaveinfo
+    where LEAVE_ID = #{leaveId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ssm.model.LeaveinfoExample" >
+    delete from leaveinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ssm.model.Leaveinfo" >
+    insert into leaveinfo (LEAVE_ID, PASS_ID, USER_ID, 
+      DUSER_ID, LEAVE_STARTTIME, LEAVE_ENDTIME, 
+      LEAVE_REASON, LEAVE_PASSTIME, LEAVE_PASSCONT
+      )
+    values (#{leaveId,jdbcType=INTEGER}, #{passId,jdbcType=INTEGER}, #{userId,jdbcType=VARCHAR}, 
+      #{duserId,jdbcType=VARCHAR}, #{leaveStarttime,jdbcType=TIMESTAMP}, #{leaveEndtime,jdbcType=TIMESTAMP}, 
+      #{leaveReason,jdbcType=VARCHAR}, #{leavePasstime,jdbcType=TIMESTAMP}, #{leavePasscont,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ssm.model.Leaveinfo" >
+    insert into leaveinfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="leaveId != null" >
+        LEAVE_ID,
+      </if>
+      <if test="passId != null" >
+        PASS_ID,
+      </if>
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+      <if test="duserId != null" >
+        DUSER_ID,
+      </if>
+      <if test="leaveStarttime != null" >
+        LEAVE_STARTTIME,
+      </if>
+      <if test="leaveEndtime != null" >
+        LEAVE_ENDTIME,
+      </if>
+      <if test="leaveReason != null" >
+        LEAVE_REASON,
+      </if>
+      <if test="leavePasstime != null" >
+        LEAVE_PASSTIME,
+      </if>
+      <if test="leavePasscont != null" >
+        LEAVE_PASSCONT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="leaveId != null" >
+        #{leaveId,jdbcType=INTEGER},
+      </if>
+      <if test="passId != null" >
+        #{passId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="duserId != null" >
+        #{duserId,jdbcType=VARCHAR},
+      </if>
+      <if test="leaveStarttime != null" >
+        #{leaveStarttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="leaveEndtime != null" >
+        #{leaveEndtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="leaveReason != null" >
+        #{leaveReason,jdbcType=VARCHAR},
+      </if>
+      <if test="leavePasstime != null" >
+        #{leavePasstime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="leavePasscont != null" >
+        #{leavePasscont,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ssm.model.LeaveinfoExample" resultType="java.lang.Integer" >
+    select count(*) from leaveinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update leaveinfo
+    <set >
+      <if test="record.leaveId != null" >
+        LEAVE_ID = #{record.leaveId,jdbcType=INTEGER},
+      </if>
+      <if test="record.passId != null" >
+        PASS_ID = #{record.passId,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null" >
+        USER_ID = #{record.userId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.duserId != null" >
+        DUSER_ID = #{record.duserId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.leaveStarttime != null" >
+        LEAVE_STARTTIME = #{record.leaveStarttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.leaveEndtime != null" >
+        LEAVE_ENDTIME = #{record.leaveEndtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.leaveReason != null" >
+        LEAVE_REASON = #{record.leaveReason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.leavePasstime != null" >
+        LEAVE_PASSTIME = #{record.leavePasstime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.leavePasscont != null" >
+        LEAVE_PASSCONT = #{record.leavePasscont,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update leaveinfo
+    set LEAVE_ID = #{record.leaveId,jdbcType=INTEGER},
+      PASS_ID = #{record.passId,jdbcType=INTEGER},
+      USER_ID = #{record.userId,jdbcType=VARCHAR},
+      DUSER_ID = #{record.duserId,jdbcType=VARCHAR},
+      LEAVE_STARTTIME = #{record.leaveStarttime,jdbcType=TIMESTAMP},
+      LEAVE_ENDTIME = #{record.leaveEndtime,jdbcType=TIMESTAMP},
+      LEAVE_REASON = #{record.leaveReason,jdbcType=VARCHAR},
+      LEAVE_PASSTIME = #{record.leavePasstime,jdbcType=TIMESTAMP},
+      LEAVE_PASSCONT = #{record.leavePasscont,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ssm.model.Leaveinfo" >
+    update leaveinfo
+    <set >
+      <if test="passId != null" >
+        PASS_ID = #{passId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        USER_ID = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="duserId != null" >
+        DUSER_ID = #{duserId,jdbcType=VARCHAR},
+      </if>
+      <if test="leaveStarttime != null" >
+        LEAVE_STARTTIME = #{leaveStarttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="leaveEndtime != null" >
+        LEAVE_ENDTIME = #{leaveEndtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="leaveReason != null" >
+        LEAVE_REASON = #{leaveReason,jdbcType=VARCHAR},
+      </if>
+      <if test="leavePasstime != null" >
+        LEAVE_PASSTIME = #{leavePasstime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="leavePasscont != null" >
+        LEAVE_PASSCONT = #{leavePasscont,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where LEAVE_ID = #{leaveId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ssm.model.Leaveinfo" >
+    update leaveinfo
+    set PASS_ID = #{passId,jdbcType=INTEGER},
+      USER_ID = #{userId,jdbcType=VARCHAR},
+      DUSER_ID = #{duserId,jdbcType=VARCHAR},
+      LEAVE_STARTTIME = #{leaveStarttime,jdbcType=TIMESTAMP},
+      LEAVE_ENDTIME = #{leaveEndtime,jdbcType=TIMESTAMP},
+      LEAVE_REASON = #{leaveReason,jdbcType=VARCHAR},
+      LEAVE_PASSTIME = #{leavePasstime,jdbcType=TIMESTAMP},
+      LEAVE_PASSCONT = #{leavePasscont,jdbcType=VARCHAR}
+    where LEAVE_ID = #{leaveId,jdbcType=INTEGER}
+  </update>
+</mapper>

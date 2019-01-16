@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.dao.TUserMapper" >
+  <resultMap id="BaseResultMap" type="com.ssm.model.TUser" >
+    <id column="USER_ID" property="userId" jdbcType="VARCHAR" />
+    <result column="DEPT_ID" property="deptId" jdbcType="INTEGER" />
+    <result column="JOB_ID" property="jobId" jdbcType="INTEGER" />
+    <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+    <result column="USER_SEX" property="userSex" jdbcType="CHAR" />
+    <result column="USER_AGE" property="userAge" jdbcType="INTEGER" />
+    <result column="USER_SALARY" property="userSalary" jdbcType="INTEGER" />
+    <result column="USER_TEL" property="userTel" jdbcType="VARCHAR" />
+    <result column="USER_ADD" property="userAdd" jdbcType="VARCHAR" />
+    <result column="USER_EML" property="userEml" jdbcType="VARCHAR" />
+    <result column="USER_DATE" property="userDate" jdbcType="DATE" />
+    <result column="USER_PHO" property="userPho" jdbcType="VARCHAR" />
+    <result column="USER_PW" property="userPw" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    USER_ID, DEPT_ID, JOB_ID, USER_NAME, USER_SEX, USER_AGE, USER_SALARY, USER_TEL, USER_ADD, 
+    USER_EML, USER_DATE, USER_PHO, USER_PW
+  </sql>
+  
+  
+  <select id="findByUserCount" parameterType="com.ssm.model.TUser" resultMap="BaseResultMap">
+  	 select * from t_user where USER_NAME = #{userName}
+  </select>
+  
+  
+  
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ssm.model.TUserExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_user
+    where USER_ID = #{userId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_user
+    where USER_ID = #{userId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ssm.model.TUserExample" >
+    delete from t_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ssm.model.TUser" >
+    insert into t_user (USER_ID, DEPT_ID, JOB_ID, 
+      USER_NAME, USER_SEX, USER_AGE, 
+      USER_SALARY, USER_TEL, USER_ADD, 
+      USER_EML, USER_DATE, USER_PHO, 
+      USER_PW)
+    values (#{userId,jdbcType=VARCHAR}, #{deptId,jdbcType=INTEGER}, #{jobId,jdbcType=INTEGER}, 
+      #{userName,jdbcType=VARCHAR}, #{userSex,jdbcType=CHAR}, #{userAge,jdbcType=INTEGER}, 
+      #{userSalary,jdbcType=INTEGER}, #{userTel,jdbcType=VARCHAR}, #{userAdd,jdbcType=VARCHAR}, 
+      #{userEml,jdbcType=VARCHAR}, #{userDate,jdbcType=DATE}, #{userPho,jdbcType=VARCHAR}, 
+      #{userPw,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ssm.model.TUser" >
+    insert into t_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+      <if test="deptId != null" >
+        DEPT_ID,
+      </if>
+      <if test="jobId != null" >
+        JOB_ID,
+      </if>
+      <if test="userName != null" >
+        USER_NAME,
+      </if>
+      <if test="userSex != null" >
+        USER_SEX,
+      </if>
+      <if test="userAge != null" >
+        USER_AGE,
+      </if>
+      <if test="userSalary != null" >
+        USER_SALARY,
+      </if>
+      <if test="userTel != null" >
+        USER_TEL,
+      </if>
+      <if test="userAdd != null" >
+        USER_ADD,
+      </if>
+      <if test="userEml != null" >
+        USER_EML,
+      </if>
+      <if test="userDate != null" >
+        USER_DATE,
+      </if>
+      <if test="userPho != null" >
+        USER_PHO,
+      </if>
+      <if test="userPw != null" >
+        USER_PW,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="deptId != null" >
+        #{deptId,jdbcType=INTEGER},
+      </if>
+      <if test="jobId != null" >
+        #{jobId,jdbcType=INTEGER},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userSex != null" >
+        #{userSex,jdbcType=CHAR},
+      </if>
+      <if test="userAge != null" >
+        #{userAge,jdbcType=INTEGER},
+      </if>
+      <if test="userSalary != null" >
+        #{userSalary,jdbcType=INTEGER},
+      </if>
+      <if test="userTel != null" >
+        #{userTel,jdbcType=VARCHAR},
+      </if>
+      <if test="userAdd != null" >
+        #{userAdd,jdbcType=VARCHAR},
+      </if>
+      <if test="userEml != null" >
+        #{userEml,jdbcType=VARCHAR},
+      </if>
+      <if test="userDate != null" >
+        #{userDate,jdbcType=DATE},
+      </if>
+      <if test="userPho != null" >
+        #{userPho,jdbcType=VARCHAR},
+      </if>
+      <if test="userPw != null" >
+        #{userPw,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ssm.model.TUserExample" resultType="java.lang.Integer" >
+    select count(*) from t_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_user
+    <set >
+      <if test="record.userId != null" >
+        USER_ID = #{record.userId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deptId != null" >
+        DEPT_ID = #{record.deptId,jdbcType=INTEGER},
+      </if>
+      <if test="record.jobId != null" >
+        JOB_ID = #{record.jobId,jdbcType=INTEGER},
+      </if>
+      <if test="record.userName != null" >
+        USER_NAME = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userSex != null" >
+        USER_SEX = #{record.userSex,jdbcType=CHAR},
+      </if>
+      <if test="record.userAge != null" >
+        USER_AGE = #{record.userAge,jdbcType=INTEGER},
+      </if>
+      <if test="record.userSalary != null" >
+        USER_SALARY = #{record.userSalary,jdbcType=INTEGER},
+      </if>
+      <if test="record.userTel != null" >
+        USER_TEL = #{record.userTel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userAdd != null" >
+        USER_ADD = #{record.userAdd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userEml != null" >
+        USER_EML = #{record.userEml,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userDate != null" >
+        USER_DATE = #{record.userDate,jdbcType=DATE},
+      </if>
+      <if test="record.userPho != null" >
+        USER_PHO = #{record.userPho,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userPw != null" >
+        USER_PW = #{record.userPw,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_user
+    set USER_ID = #{record.userId,jdbcType=VARCHAR},
+      DEPT_ID = #{record.deptId,jdbcType=INTEGER},
+      JOB_ID = #{record.jobId,jdbcType=INTEGER},
+      USER_NAME = #{record.userName,jdbcType=VARCHAR},
+      USER_SEX = #{record.userSex,jdbcType=CHAR},
+      USER_AGE = #{record.userAge,jdbcType=INTEGER},
+      USER_SALARY = #{record.userSalary,jdbcType=INTEGER},
+      USER_TEL = #{record.userTel,jdbcType=VARCHAR},
+      USER_ADD = #{record.userAdd,jdbcType=VARCHAR},
+      USER_EML = #{record.userEml,jdbcType=VARCHAR},
+      USER_DATE = #{record.userDate,jdbcType=DATE},
+      USER_PHO = #{record.userPho,jdbcType=VARCHAR},
+      USER_PW = #{record.userPw,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ssm.model.TUser" >
+    update t_user
+    <set >
+      <if test="deptId != null" >
+        DEPT_ID = #{deptId,jdbcType=INTEGER},
+      </if>
+      <if test="jobId != null" >
+        JOB_ID = #{jobId,jdbcType=INTEGER},
+      </if>
+      <if test="userName != null" >
+        USER_NAME = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userSex != null" >
+        USER_SEX = #{userSex,jdbcType=CHAR},
+      </if>
+      <if test="userAge != null" >
+        USER_AGE = #{userAge,jdbcType=INTEGER},
+      </if>
+      <if test="userSalary != null" >
+        USER_SALARY = #{userSalary,jdbcType=INTEGER},
+      </if>
+      <if test="userTel != null" >
+        USER_TEL = #{userTel,jdbcType=VARCHAR},
+      </if>
+      <if test="userAdd != null" >
+        USER_ADD = #{userAdd,jdbcType=VARCHAR},
+      </if>
+      <if test="userEml != null" >
+        USER_EML = #{userEml,jdbcType=VARCHAR},
+      </if>
+      <if test="userDate != null" >
+        USER_DATE = #{userDate,jdbcType=DATE},
+      </if>
+      <if test="userPho != null" >
+        USER_PHO = #{userPho,jdbcType=VARCHAR},
+      </if>
+      <if test="userPw != null" >
+        USER_PW = #{userPw,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where USER_ID = #{userId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ssm.model.TUser" >
+    update t_user
+    set DEPT_ID = #{deptId,jdbcType=INTEGER},
+      JOB_ID = #{jobId,jdbcType=INTEGER},
+      USER_NAME = #{userName,jdbcType=VARCHAR},
+      USER_SEX = #{userSex,jdbcType=CHAR},
+      USER_AGE = #{userAge,jdbcType=INTEGER},
+      USER_SALARY = #{userSalary,jdbcType=INTEGER},
+      USER_TEL = #{userTel,jdbcType=VARCHAR},
+      USER_ADD = #{userAdd,jdbcType=VARCHAR},
+      USER_EML = #{userEml,jdbcType=VARCHAR},
+      USER_DATE = #{userDate,jdbcType=DATE},
+      USER_PHO = #{userPho,jdbcType=VARCHAR},
+      USER_PW = #{userPw,jdbcType=VARCHAR}
+    where USER_ID = #{userId,jdbcType=VARCHAR}
+  </update>
+</mapper>

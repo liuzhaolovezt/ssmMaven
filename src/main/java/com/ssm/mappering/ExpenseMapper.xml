@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.dao.ExpenseMapper" >
+  <resultMap id="BaseResultMap" type="com.ssm.model.Expense" >
+    <id column="EXPENSE_ID" property="expenseId" jdbcType="INTEGER" />
+    <result column="EXCLASS_ID" property="exclassId" jdbcType="INTEGER" />
+    <result column="USER_ID" property="userId" jdbcType="VARCHAR" />
+    <result column="DUSER_ID" property="duserId" jdbcType="VARCHAR" />
+    <result column="PASS_ID" property="passId" jdbcType="INTEGER" />
+    <result column="EXPENSE_INFO" property="expenseInfo" jdbcType="VARCHAR" />
+    <result column="EXPENSE_MONEY" property="expenseMoney" jdbcType="INTEGER" />
+    <result column="EXPENSE_TIME" property="expenseTime" jdbcType="TIMESTAMP" />
+    <result column="EXPENSE_PASSTIME" property="expensePasstime" jdbcType="TIMESTAMP" />
+    <result column="EXPENSE_PASSINFO" property="expensePassinfo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    EXPENSE_ID, EXCLASS_ID, USER_ID, DUSER_ID, PASS_ID, EXPENSE_INFO, EXPENSE_MONEY, 
+    EXPENSE_TIME, EXPENSE_PASSTIME, EXPENSE_PASSINFO
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ssm.model.ExpenseExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from expense
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from expense
+    where EXPENSE_ID = #{expenseId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from expense
+    where EXPENSE_ID = #{expenseId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ssm.model.ExpenseExample" >
+    delete from expense
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ssm.model.Expense" >
+    insert into expense (EXPENSE_ID, EXCLASS_ID, USER_ID, 
+      DUSER_ID, PASS_ID, EXPENSE_INFO, 
+      EXPENSE_MONEY, EXPENSE_TIME, EXPENSE_PASSTIME, 
+      EXPENSE_PASSINFO)
+    values (#{expenseId,jdbcType=INTEGER}, #{exclassId,jdbcType=INTEGER}, #{userId,jdbcType=VARCHAR}, 
+      #{duserId,jdbcType=VARCHAR}, #{passId,jdbcType=INTEGER}, #{expenseInfo,jdbcType=VARCHAR}, 
+      #{expenseMoney,jdbcType=INTEGER}, #{expenseTime,jdbcType=TIMESTAMP}, #{expensePasstime,jdbcType=TIMESTAMP}, 
+      #{expensePassinfo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ssm.model.Expense" >
+    insert into expense
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="expenseId != null" >
+        EXPENSE_ID,
+      </if>
+      <if test="exclassId != null" >
+        EXCLASS_ID,
+      </if>
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+      <if test="duserId != null" >
+        DUSER_ID,
+      </if>
+      <if test="passId != null" >
+        PASS_ID,
+      </if>
+      <if test="expenseInfo != null" >
+        EXPENSE_INFO,
+      </if>
+      <if test="expenseMoney != null" >
+        EXPENSE_MONEY,
+      </if>
+      <if test="expenseTime != null" >
+        EXPENSE_TIME,
+      </if>
+      <if test="expensePasstime != null" >
+        EXPENSE_PASSTIME,
+      </if>
+      <if test="expensePassinfo != null" >
+        EXPENSE_PASSINFO,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="expenseId != null" >
+        #{expenseId,jdbcType=INTEGER},
+      </if>
+      <if test="exclassId != null" >
+        #{exclassId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="duserId != null" >
+        #{duserId,jdbcType=VARCHAR},
+      </if>
+      <if test="passId != null" >
+        #{passId,jdbcType=INTEGER},
+      </if>
+      <if test="expenseInfo != null" >
+        #{expenseInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="expenseMoney != null" >
+        #{expenseMoney,jdbcType=INTEGER},
+      </if>
+      <if test="expenseTime != null" >
+        #{expenseTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expensePasstime != null" >
+        #{expensePasstime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expensePassinfo != null" >
+        #{expensePassinfo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ssm.model.ExpenseExample" resultType="java.lang.Integer" >
+    select count(*) from expense
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update expense
+    <set >
+      <if test="record.expenseId != null" >
+        EXPENSE_ID = #{record.expenseId,jdbcType=INTEGER},
+      </if>
+      <if test="record.exclassId != null" >
+        EXCLASS_ID = #{record.exclassId,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null" >
+        USER_ID = #{record.userId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.duserId != null" >
+        DUSER_ID = #{record.duserId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.passId != null" >
+        PASS_ID = #{record.passId,jdbcType=INTEGER},
+      </if>
+      <if test="record.expenseInfo != null" >
+        EXPENSE_INFO = #{record.expenseInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.expenseMoney != null" >
+        EXPENSE_MONEY = #{record.expenseMoney,jdbcType=INTEGER},
+      </if>
+      <if test="record.expenseTime != null" >
+        EXPENSE_TIME = #{record.expenseTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.expensePasstime != null" >
+        EXPENSE_PASSTIME = #{record.expensePasstime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.expensePassinfo != null" >
+        EXPENSE_PASSINFO = #{record.expensePassinfo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update expense
+    set EXPENSE_ID = #{record.expenseId,jdbcType=INTEGER},
+      EXCLASS_ID = #{record.exclassId,jdbcType=INTEGER},
+      USER_ID = #{record.userId,jdbcType=VARCHAR},
+      DUSER_ID = #{record.duserId,jdbcType=VARCHAR},
+      PASS_ID = #{record.passId,jdbcType=INTEGER},
+      EXPENSE_INFO = #{record.expenseInfo,jdbcType=VARCHAR},
+      EXPENSE_MONEY = #{record.expenseMoney,jdbcType=INTEGER},
+      EXPENSE_TIME = #{record.expenseTime,jdbcType=TIMESTAMP},
+      EXPENSE_PASSTIME = #{record.expensePasstime,jdbcType=TIMESTAMP},
+      EXPENSE_PASSINFO = #{record.expensePassinfo,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ssm.model.Expense" >
+    update expense
+    <set >
+      <if test="exclassId != null" >
+        EXCLASS_ID = #{exclassId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        USER_ID = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="duserId != null" >
+        DUSER_ID = #{duserId,jdbcType=VARCHAR},
+      </if>
+      <if test="passId != null" >
+        PASS_ID = #{passId,jdbcType=INTEGER},
+      </if>
+      <if test="expenseInfo != null" >
+        EXPENSE_INFO = #{expenseInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="expenseMoney != null" >
+        EXPENSE_MONEY = #{expenseMoney,jdbcType=INTEGER},
+      </if>
+      <if test="expenseTime != null" >
+        EXPENSE_TIME = #{expenseTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expensePasstime != null" >
+        EXPENSE_PASSTIME = #{expensePasstime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expensePassinfo != null" >
+        EXPENSE_PASSINFO = #{expensePassinfo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where EXPENSE_ID = #{expenseId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ssm.model.Expense" >
+    update expense
+    set EXCLASS_ID = #{exclassId,jdbcType=INTEGER},
+      USER_ID = #{userId,jdbcType=VARCHAR},
+      DUSER_ID = #{duserId,jdbcType=VARCHAR},
+      PASS_ID = #{passId,jdbcType=INTEGER},
+      EXPENSE_INFO = #{expenseInfo,jdbcType=VARCHAR},
+      EXPENSE_MONEY = #{expenseMoney,jdbcType=INTEGER},
+      EXPENSE_TIME = #{expenseTime,jdbcType=TIMESTAMP},
+      EXPENSE_PASSTIME = #{expensePasstime,jdbcType=TIMESTAMP},
+      EXPENSE_PASSINFO = #{expensePassinfo,jdbcType=VARCHAR}
+    where EXPENSE_ID = #{expenseId,jdbcType=INTEGER}
+  </update>
+</mapper>
