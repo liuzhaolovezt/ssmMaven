@@ -1,16 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ page isELIgnored="false"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>OA管理平台</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath }/static/css/global.css" type="text/css" />
-<link rel="stylesheet" href="${pageContext.request.contextPath }/static/css/list.css" type="text/css" />
-<link rel="stylesheet" href="${pageContext.request.contextPath }/static/css/menu.css" type="text/css" />
-<script src="${pageContext.request.contextPath }/static/js/fixPNG.js" type="text/javascript"></script>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath }/static/css/global.css"
+	type="text/css" />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath }/static/css/list.css"
+	type="text/css" />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath }/static/css/menu.css"
+	type="text/css" />
+<script src="${pageContext.request.contextPath }/static/js/fixPNG.js"
+	type="text/javascript"></script>
 
 </head>
 
@@ -52,20 +61,38 @@
 						<td width="50%" align="center"><strong>公告内容</strong></td>
 						<td width="10%" align="center"><strong>发布人</strong></td>
 						<td width="10%" align="center"><strong>发布时间</strong></td>
-						<!-- <td width="8%" align="center"><strong>操作</strong></td> -->
+					
 					</tr>
-						<c:forEach items="${noticeList }" var="item">
+					<c:forEach items="${noticeList }" var="item">
 						<tr class="line_g hover_bg">
-							 <td  width="5%" align="center"><input type="checkbox" name="items_id"
-								value="${item.noticeId}" /></td> 
+							<td width="5%" align="center"><input type="checkbox"
+								name="items_id" value="${item.noticeId}" /></td>
 							<td width="5%" align="center">${item.noticeId }</td>
-							<td width="6%" align="center">${item.noticeTitle }</td>
-							<td width="50%"  align="center">${item.noticeCont }</td>
-							<td  width="10%" align="center">${item.userId }</td>
-							<td width="10%" align="center"><fmt:formatDate value="${item.noticeTime}"
-									pattern="yyyy-MM-dd HH:mm:ss" /></td>
+							<td width="6%" align="center">
 							
-						<%-- 	<td align="center"><a
+							    <c:if test="${fn:length(item.noticeTitle)<='8'}">
+				                     <a href="${pageContext.request.contextPath }/index.jsp">  ${item.noticeTitle} </a>
+				                  
+		                       	</c:if> 
+		                       	<c:if test="${fn:length(item.noticeTitle)>'8'}">
+					                   <a href="#" >  ${fn:substring(item.noticeTitle,0,8)}...</a>
+			                    </c:if>
+			                </td>
+							<td width="50%" align="center">
+							    <c:if
+									test="${fn:length(item.noticeCont)<='50'}">
+				                       ${item.noticeCont}
+		                       	</c:if> 
+		                       	<c:if
+									test="${fn:length(item.noticeCont)>'50'}">
+					                   ${fn:substring(item.noticeCont,0,50)}...
+			                    </c:if>
+			                </td>
+							<td width="10%" align="center">${item.userName }</td>
+							<td width="10%" align="center"><fmt:formatDate
+									value="${item.noticeTime}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
+
+							<%-- 	<td align="center"><a
 								href="${pageContext.request.contextPath }/items/editItems.action?id=${item.noticeId}">修改</a></td>
  --%>
 						</tr>
@@ -81,7 +108,7 @@
 							</ul>
 							<div class="page fright">
 								<ul>
-									<li>共<strong class="color_red">126</strong>条
+									<li>共<strong class="color_red">${ noticeNum}</strong>条
 									</li>
 									<li>首页</li>
 									<li>上一页</li>

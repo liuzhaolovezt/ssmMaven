@@ -52,7 +52,7 @@
 <div class="logo fleft"><img src="static/images/logo.png" width="344" height="49" /></div>
 <div class="header_right">
 <ul>
-  <li><a href="#" onclick="addTab('index.jsp','我的首页');" title="首页" id="home"></a></li>
+  <li><a href="#" onclick="addTab('${pageContext.request.contextPath }/center.jsp','我的桌面');" title="首页" id="home"></a></li>
   <li><a href="#" title="更换皮肤" id="theme"></a></li>
   <li><a href="#" title="设置" id="Setup"></a></li>
   <li><a href="javascript:location.reload();"title="刷新" id="refresh"></a></li>

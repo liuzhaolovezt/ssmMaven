@@ -1,7 +1,10 @@
 package com.ssm.dao;
 
 import com.ssm.model.Notice;
+import com.ssm.model.NoticeCustom;
 import com.ssm.model.NoticeExample;
+import com.ssm.model.NoticeQueryVo;
+
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -27,4 +30,6 @@ public interface NoticeMapper {
     int updateByPrimaryKeySelective(Notice record);
 
     int updateByPrimaryKey(Notice record);
+    
+    List<NoticeCustom> findNoticeList(NoticeQueryVo exampleVo);
 }

@@ -11,6 +11,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ssm.model.Notice;
+import com.ssm.model.NoticeCustom;
 import com.ssm.service.INoticeService;
 import com.ssm.service.NoticeServiceImpl;
 
@@ -73,10 +74,14 @@ public class NoticeController {
 	@RequestMapping("/showNotice")
 	public String showNotice(HttpServletRequest request){
 		List<Notice> selectByExample = iNoticeService.selectByExample();
-		//iNoticeService.
-		request.setAttribute("noticeList", selectByExample);
+        List<NoticeCustom> findNoticeList = iNoticeService.findNoticeList(null);
+		int noticeNum=iNoticeService.countByExample(null);
+		request.setAttribute("noticeList", findNoticeList);
+		request.setAttribute("noticeNum", noticeNum);
 		return SHOWNOTICE;
 	}
+	
+	
 	
 	
 }

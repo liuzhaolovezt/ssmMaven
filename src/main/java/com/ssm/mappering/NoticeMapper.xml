@@ -225,4 +225,22 @@
       NOTICE_TIME = #{noticeTime,jdbcType=TIMESTAMP}
     where NOTICE_ID = #{noticeId,jdbcType=INTEGER}
   </update>
+  
+  
+  <!-- 20190116 多表查询 -->
+    <resultMap id="BaseResultMapCustom" type="com.ssm.model.NoticeCustom" >
+    <id column="NOTICE_ID" property="noticeId" jdbcType="INTEGER" />
+    <result column="USER_ID" property="userId" jdbcType="VARCHAR" />
+    <result column="NOTICE_SCOPE" property="noticeScope" jdbcType="VARCHAR" />
+    <result column="NOTICE_TITLE" property="noticeTitle" jdbcType="VARCHAR" />
+    <result column="NOTICE_CONT" property="noticeCont" jdbcType="VARCHAR" />
+    <result column="NOTICE_TIME" property="noticeTime" jdbcType="TIMESTAMP" />
+     <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+  </resultMap>
+	<select id="findNoticeList" parameterType="com.ssm.model.NoticeQueryVo" resultMap="BaseResultMapCustom">
+		select a.NOTICE_ID,a.NOTICE_TITLE,a.NOTICE_CONT,a.NOTICE_TIME, b.USER_NAME as userName
+        FROM notice a,t_user b 
+         where a.USER_ID=b.USER_ID
+         order by a.NOTICE_ID asc;
+	</select>
 </mapper>

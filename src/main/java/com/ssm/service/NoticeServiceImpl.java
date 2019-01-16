@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 
 import com.ssm.dao.NoticeMapper;
 import com.ssm.model.Notice;
+import com.ssm.model.NoticeCustom;
 import com.ssm.model.NoticeExample;
+import com.ssm.model.NoticeQueryVo;
 
 @Service("noticeService")
 public class NoticeServiceImpl implements INoticeService{
@@ -25,14 +27,15 @@ public class NoticeServiceImpl implements INoticeService{
 	}
 	@Override
 	public int countByExample(NoticeExample example) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		return noticeMapper.countByExample(example);
+	}
+	@Override
+	public List<NoticeCustom> findNoticeList(NoticeQueryVo exampleVo) {
+		return noticeMapper.findNoticeList(exampleVo);
 	}
 	
 	
-	/*public  int countByExample(NoticeExample example){
-		
-	}*/
 
 	
 	
