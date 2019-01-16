@@ -7,14 +7,15 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.lz.service.IStationService;
+
+import com.ssm.service.INoticeService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath*:spring.xml", "classpath*:spring-mybatis.xml" })
 public class MyBatisTest {
 
 	@Autowired
-	private IStationService sta;
+	private INoticeService sta;
 	//ctrl +alt +1
 	@Test
 	public void  startToEndProce(){
@@ -22,7 +23,7 @@ public class MyBatisTest {
 		//System.err.println(beans+"-------------------");
 		//IStationService sta =(IStationService) beans.getBean("stationService");
 		System.err.println(sta+"================");
-		Double dou = sta.startToEndProce("k339", "秦皇岛", "哈尔滨");
+		Double dou=1.0;// = sta.startToEndProce("k339", "秦皇岛", "哈尔滨");
 		System.out.println(dou);
 	};
 }

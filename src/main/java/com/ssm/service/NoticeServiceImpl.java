@@ -6,7 +6,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.lz.service.StationServiceImpl;
 import com.ssm.dao.NoticeMapper;
 import com.ssm.model.Notice;
 import com.ssm.model.NoticeExample;
