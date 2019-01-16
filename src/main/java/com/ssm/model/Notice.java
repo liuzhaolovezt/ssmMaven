@@ -3,7 +3,7 @@ package com.ssm.model;
 import java.util.Date;
 
 public class Notice {
-    private Integer noticeId;
+      private Integer noticeId;
 
     private String userId;
 
