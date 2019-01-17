@@ -241,6 +241,16 @@
 		select a.NOTICE_ID,a.NOTICE_TITLE,a.NOTICE_CONT,a.NOTICE_TIME, b.USER_NAME as userName
         FROM notice a,t_user b 
          where a.USER_ID=b.USER_ID
-         order by a.NOTICE_ID asc;
+         order by a.NOTICE_ID asc
+	</select>
+	
+	<select id="findNoticePage" parameterType="Map" resultMap="BaseResultMapCustom">
+		select a.NOTICE_ID,a.NOTICE_TITLE,a.NOTICE_CONT,a.NOTICE_TIME, b.USER_NAME as userName
+        FROM notice a,t_user b 
+         where a.USER_ID=b.USER_ID
+         order by a.NOTICE_ID asc 
+        <if test="start!=null and size!=null">
+			limit #{start},#{size}
+		</if>
 	</select>
 </mapper>

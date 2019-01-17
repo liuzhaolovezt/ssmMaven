@@ -185,7 +185,7 @@
 							src="static/images/icon_2.png" width="56" height="58" /></a>
 					</li>
 					<li>
-						<p>公告</p> <a href="#" onclick="parent.addTab('${pageContext.request.contextPath }/notice/showNotice.action','公告')"><img
+						<p>公告</p> <a href="#" onclick="parent.addTab('${pageContext.request.contextPath }/notice/showNotice.action?currentPage=1','公告')"><img
 							src="static/images/icon_3.png" width="64" height="57" /></a>
 					</li>
 					<li>

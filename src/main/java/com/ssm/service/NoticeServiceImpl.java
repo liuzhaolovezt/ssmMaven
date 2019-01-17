@@ -1,6 +1,7 @@
 package com.ssm.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import com.ssm.model.Notice;
 import com.ssm.model.NoticeCustom;
 import com.ssm.model.NoticeExample;
 import com.ssm.model.NoticeQueryVo;
+import com.ssm.util.PagerUtil;
 
 @Service("noticeService")
 public class NoticeServiceImpl implements INoticeService{
@@ -33,6 +35,11 @@ public class NoticeServiceImpl implements INoticeService{
 	@Override
 	public List<NoticeCustom> findNoticeList(NoticeQueryVo exampleVo) {
 		return noticeMapper.findNoticeList(exampleVo);
+	}
+	@Override
+	public List<NoticeCustom> findNoticePage(Map map) {
+		//noticeMapper.findNoticePage(pagerUtil);
+		return noticeMapper.findNoticePage(map);
 	}
 	
 	

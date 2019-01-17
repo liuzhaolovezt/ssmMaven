@@ -20,6 +20,19 @@
 	type="text/css" />
 <script src="${pageContext.request.contextPath }/static/js/fixPNG.js"
 	type="text/javascript"></script>
+<script src="${pageContext.request.contextPath }/static/js/jquery.js"
+	type="text/javascript"></script>
+	
+	<script type="text/javascript">
+		/**跳转页数**/
+		function goToPage(){
+			if(confirm("您确定要退出本系统吗？")){
+				window.parent.location.href = "exit";
+			}
+		}
+		
+		
+	</script>
 
 </head>
 
@@ -61,33 +74,28 @@
 						<td width="50%" align="center"><strong>公告内容</strong></td>
 						<td width="10%" align="center"><strong>发布人</strong></td>
 						<td width="10%" align="center"><strong>发布时间</strong></td>
-					
+
 					</tr>
 					<c:forEach items="${noticeList }" var="item">
 						<tr class="line_g hover_bg">
 							<td width="5%" align="center"><input type="checkbox"
 								name="items_id" value="${item.noticeId}" /></td>
 							<td width="5%" align="center">${item.noticeId }</td>
-							<td width="6%" align="center">
-							
-							    <c:if test="${fn:length(item.noticeTitle)<='8'}">
-				                     <a href="${pageContext.request.contextPath }/index.jsp">  ${item.noticeTitle} </a>
-				                  
-		                       	</c:if> 
-		                       	<c:if test="${fn:length(item.noticeTitle)>'8'}">
-					                   <a href="#" >  ${fn:substring(item.noticeTitle,0,8)}...</a>
-			                    </c:if>
-			                </td>
-							<td width="50%" align="center">
-							    <c:if
+							<td width="6%" align="center"><c:if
+									test="${fn:length(item.noticeTitle)<='8'}">
+									<a href="${pageContext.request.contextPath }/index.jsp">
+										${item.noticeTitle} </a>
+
+								</c:if> <c:if test="${fn:length(item.noticeTitle)>'8'}">
+									<a href="#"> ${fn:substring(item.noticeTitle,0,8)}...</a>
+								</c:if></td>
+							<td width="50%" align="center"><c:if
 									test="${fn:length(item.noticeCont)<='50'}">
 				                       ${item.noticeCont}
-		                       	</c:if> 
-		                       	<c:if
+		                       	</c:if> <c:if
 									test="${fn:length(item.noticeCont)>'50'}">
 					                   ${fn:substring(item.noticeCont,0,50)}...
-			                    </c:if>
-			                </td>
+			                    </c:if></td>
 							<td width="10%" align="center">${item.userName }</td>
 							<td width="10%" align="center"><fmt:formatDate
 									value="${item.noticeTime}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
@@ -108,16 +116,38 @@
 							</ul>
 							<div class="page fright">
 								<ul>
-									<li>共<strong class="color_red">${ noticeNum}</strong>条
+									<li>共<strong class="color_red">${ pagerUtil.totalRecord}</strong>条
 									</li>
-									<li>首页</li>
-									<li>上一页</li>
-									<li>1/3</li>
-									<li><a href="#">下一页</a></li>
-									<li><a href="#">尾页</a></li>
-									<li>转到第<input type="text" class="page_numble" />页
+									<c:choose>
+										<c:when test="${ pagerUtil.page!=1}">
+											<li><a
+												href="${pageContext.request.contextPath }/notice/showNotice.action?currentPage=1">首页
+											</a></li>
+											<li><a
+												href="${pageContext.request.contextPath }/notice/showNotice.action?currentPage=${ pagerUtil.page-1}">上一页</a></li>
+										</c:when>
+										<c:otherwise>
+											<li>首页</li>
+											<li>上一页</li>
+										</c:otherwise>
+									</c:choose>
+									<li><a href="#">${ pagerUtil.page}</a>/${ pagerUtil.totalPage}</li>
+									<c:choose>
+										<c:when test="${ pagerUtil.page!=pagerUtil.totalPage}">
+											<li><a
+												href="${pageContext.request.contextPath }/notice/showNotice.action?currentPage=${pagerUtil.totalPage}">尾页
+											</a></li>
+											<li><a
+												href="${pageContext.request.contextPath }/notice/showNotice.action?currentPage=${ pagerUtil.page+1}">下一页</a></li>
+										</c:when>
+										<c:otherwise>
+											<li>尾页</li>
+											<li>下一页</li>
+										</c:otherwise>
+									</c:choose>
+									<li>转到第<input type="text" class="page_numble"  id="currPage"/>页
 									</li>
-									<li><input type="button" value="" class="go mt7" /></li>
+									<li><input type="button" value="" class="go mt7" onclick="goToPage()"/></li>
 								</ul>
 							</div>
 						</td>

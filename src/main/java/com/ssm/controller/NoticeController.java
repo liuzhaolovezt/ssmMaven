@@ -1,5 +1,6 @@
 package com.ssm.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +15,7 @@ import com.ssm.model.Notice;
 import com.ssm.model.NoticeCustom;
 import com.ssm.service.INoticeService;
 import com.ssm.service.NoticeServiceImpl;
+import com.ssm.util.PagerUtil;
 
 
 
@@ -72,12 +74,36 @@ public class NoticeController {
 	
 	
 	@RequestMapping("/showNotice")
-	public String showNotice(HttpServletRequest request){
-		List<Notice> selectByExample = iNoticeService.selectByExample();
-        List<NoticeCustom> findNoticeList = iNoticeService.findNoticeList(null);
+	public String showNotice(int currentPage,HttpServletRequest request){
+		//List<Notice> selectByExample = iNoticeService.selectByExample();
+       // List<NoticeCustom> findNoticeList = iNoticeService.findNoticeList(null);
+       
 		int noticeNum=iNoticeService.countByExample(null);
+		
+		//总条数
+		PagerUtil pagerUtil=new PagerUtil();
+	    pagerUtil.setTotalRecord(noticeNum);
+	    //第几页
+	    //currentPage=1;
+	    pagerUtil.setPage(currentPage);
+	    //每页条数
+		int pageSize=5;
+	    pagerUtil.setSize(pageSize);
+		//封装总页数
+	    if(noticeNum% pageSize!=0){
+	        pagerUtil.setTotalPage(noticeNum/ pageSize+1);
+	    }else{
+	    	pagerUtil.setTotalPage(noticeNum/ pageSize);
+	    }
+	    //(noticeNum% pageSize!=0)? (pagerUtil.setTotalPage(noticeNum/ pageSize+1):(pagerUtil.setTotalPage(noticeNum/ pageSize));
+        
+        
+		HashMap<String,Object> map = new HashMap<String,Object>();
+		map.put("start",(currentPage-1)*pageSize);
+		map.put("size", pageSize);
+	    List<NoticeCustom> findNoticeList=iNoticeService.findNoticePage(map);
 		request.setAttribute("noticeList", findNoticeList);
-		request.setAttribute("noticeNum", noticeNum);
+		request.setAttribute("pagerUtil", pagerUtil);
 		return SHOWNOTICE;
 	}
 	

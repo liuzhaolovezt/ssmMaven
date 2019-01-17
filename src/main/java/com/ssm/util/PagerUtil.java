@@ -27,9 +27,7 @@ public class PagerUtil {
 	 * 每页的数据
 	 */
 	private List data;
-	public PagerUtil() {
-		
-	}
+	
 	
 	public Integer getTotalRecord() {
 		return totalRecord;

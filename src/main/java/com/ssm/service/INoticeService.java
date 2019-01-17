@@ -1,11 +1,13 @@
 package com.ssm.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.ssm.model.Notice;
 import com.ssm.model.NoticeCustom;
 import com.ssm.model.NoticeExample;
 import com.ssm.model.NoticeQueryVo;
+import com.ssm.util.PagerUtil;
 
 public interface INoticeService {
 
@@ -27,5 +29,11 @@ public interface INoticeService {
 	 * @return
 	 */
 	public List<NoticeCustom> findNoticeList(NoticeQueryVo exampleVo);
+	/**
+	 * 公告的分页查询
+	 * @param pagerUtil
+	 * @return
+	 */
+	public  List<NoticeCustom> findNoticePage(Map map);
 	
 }
