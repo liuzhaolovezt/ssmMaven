@@ -72,38 +72,20 @@ public class NoticeController {
 		return GETPRICE;
 	}
 	
-	
+	/**
+	 * 查询所有公告信息，分页
+	 * @param currentPage  当前页
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping("/showNotice")
 	public String showNotice(int currentPage,HttpServletRequest request){
 		//List<Notice> selectByExample = iNoticeService.selectByExample();
-       // List<NoticeCustom> findNoticeList = iNoticeService.findNoticeList(null);
-       
-		int noticeNum=iNoticeService.countByExample(null);
+        // List<NoticeCustom> findNoticeList = iNoticeService.findNoticeList(null);
 		
-		//总条数
-		PagerUtil pagerUtil=new PagerUtil();
-	    pagerUtil.setTotalRecord(noticeNum);
-	    //第几页
-	    //currentPage=1;
-	    pagerUtil.setPage(currentPage);
-	    //每页条数
-		int pageSize=5;
-	    pagerUtil.setSize(pageSize);
-		//封装总页数
-	    if(noticeNum% pageSize!=0){
-	        pagerUtil.setTotalPage(noticeNum/ pageSize+1);
-	    }else{
-	    	pagerUtil.setTotalPage(noticeNum/ pageSize);
-	    }
-	    //(noticeNum% pageSize!=0)? (pagerUtil.setTotalPage(noticeNum/ pageSize+1):(pagerUtil.setTotalPage(noticeNum/ pageSize));
-        
-        
-		HashMap<String,Object> map = new HashMap<String,Object>();
-		map.put("start",(currentPage-1)*pageSize);
-		map.put("size", pageSize);
-	    List<NoticeCustom> findNoticeList=iNoticeService.findNoticePage(map);
-		request.setAttribute("noticeList", findNoticeList);
-		request.setAttribute("pagerUtil", pagerUtil);
+		PagerUtil noticePageData=iNoticeService.findNoticePage(currentPage);
+		request.setAttribute("noticeList", noticePageData.getData());
+		request.setAttribute("pagerUtil", noticePageData);
 		return SHOWNOTICE;
 	}
 	

@@ -31,9 +31,9 @@ public interface INoticeService {
 	public List<NoticeCustom> findNoticeList(NoticeQueryVo exampleVo);
 	/**
 	 * 公告的分页查询
-	 * @param pagerUtil
-	 * @return
+	 * @param   currentPage
+	 * @return  PagerUtil
 	 */
-	public  List<NoticeCustom> findNoticePage(Map map);
+	public  PagerUtil findNoticePage(int currentPage);
 	
 }

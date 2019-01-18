@@ -22,13 +22,41 @@
 	type="text/javascript"></script>
 <script src="${pageContext.request.contextPath }/static/js/jquery.js"
 	type="text/javascript"></script>
-	
-	<script type="text/javascript">
+<script type="text/javascript"
+	src="${pageContext.request.contextPath }/static/js/artDialog/artDialog.js?skin=default"></script>
+
+
+<script type="text/javascript">
+	/**判断字符是否为空的方法**/
+	function isEmpty(obj){
+	    if(typeof obj == "undefined" || obj == null || obj == ""){
+	        return true;
+	    }else{
+	        return false;
+	    }
+	}
 		/**跳转页数**/
 		function goToPage(){
-			if(confirm("您确定要退出本系统吗？")){
-				window.parent.location.href = "exit";
-			}
+		  var currPage=document.getElementById("currPage").value;
+		  //alert(${ pagerUtil.totalPage});
+		    var currPageTrim= currPage.replace(/(^\s*)|(\s*$)/g, ""); 
+		   if( isEmpty(currPageTrim)){
+			   art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'请输入正确的页数。', ok:true,});
+		       return ; 
+		   }
+		    var test1=/^[1-9]*$/;
+		    if(!test1.test(currPageTrim)){
+		          art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'输入页数有误。\n请重新输入', ok:true,});
+		          return ;
+		       }
+		  if(currPageTrim<=${ pagerUtil.totalPage}){
+			  window.location.href="${pageContext.request.contextPath}/notice/showNotice.action?currentPage="+currPageTrim;
+				 
+		  }else{
+			  art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'页数超出范围。\n请重新输入', ok:true,});
+		  }
+		 
+		 	
 		}
 		
 		
@@ -145,15 +173,15 @@
 											<li>下一页</li>
 										</c:otherwise>
 									</c:choose>
-									<li>转到第<input type="text" class="page_numble"  id="currPage"/>页
+									<li>转到第<input type="text" class="page_numble"
+										id="currPage" />页
 									</li>
-									<li><input type="button" value="" class="go mt7" onclick="goToPage()"/></li>
+									<li><input type="button" value="" class="go mt7"
+										onclick="goToPage()" /></li>
 								</ul>
 							</div>
 						</td>
 					</tr>
-
-
 				</table>
 			</div>
 		</div>
