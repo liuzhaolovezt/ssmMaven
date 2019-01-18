@@ -48,7 +48,7 @@ public class NoticeServiceImpl implements INoticeService {
 	public PagerUtil findNoticePage(int currentPage) {
 		// 总条数
 		int noticeNum = this.countByExample(null);
-		PagerUtil pagerUtil=PagerUtil.getPagerUtil(currentPage, noticeNum);
+		PagerUtil pagerUtil=PagerUtil.getPagerUtil(currentPage, noticeNum,5);
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("start", (currentPage - 1) * pagerUtil.getSize());

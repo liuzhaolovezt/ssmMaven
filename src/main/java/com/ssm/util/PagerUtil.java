@@ -65,15 +65,15 @@ public class PagerUtil {
 	 * 封装分页对象
 	 * @param currentPage 当前页 
 	 * @param noticeNum   总条数
+	 *  @param pageSize  每页条数
 	 */
-	public static PagerUtil getPagerUtil(int currentPage,int noticeNum) {
+	public static PagerUtil getPagerUtil(int currentPage,int noticeNum,int pageSize) {
         
 		PagerUtil pagerUtil = new PagerUtil();
 		pagerUtil.setTotalRecord(noticeNum);
 		// 第几页
 		pagerUtil.setPage(currentPage);
 		// 每页条数
-		int pageSize = 5;
 		pagerUtil.setSize(pageSize);
 		// 封装总页数
 		if (noticeNum % pageSize != 0) {
