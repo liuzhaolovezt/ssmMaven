@@ -180,8 +180,7 @@
 			<div class="main_desktop">
 				<ul class="desktop_wrap">
 					<li>
-						<p>个人信息</p> <a href="#"
-						onclick="window.top.addTab('list.html','个人信息');return false;"><img
+						<p>个人信息</p> <a href="#" onclick="parent.addTab('${pageContext.request.contextPath }/showPersonalInfo.action','个人信息')"><img
 							src="static/images/icon_2.png" width="56" height="58" /></a>
 					</li>
 					<li>

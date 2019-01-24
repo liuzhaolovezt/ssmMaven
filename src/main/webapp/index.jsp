@@ -74,7 +74,7 @@
 <li><a class="hide" href="#"><img src="static/images/menu.jpg" width="66" height="31" /></a>
     <ul  class="category" style="width:321px; background:url(static/images/menu_bg.jpg) repeat-y; padding-top:10px; border:2px solid #0059a5; border-bottom:none;">
     <div class="people blue"><span><img src="static/images/people.jpg" width="29" height="29" /></span><strong>${user}</strong></div>
-    <li><a href="#" class="icon_g">个人中心</a>
+    <li><a class="icon_g" onclick="parent.addTab('${pageContext.request.contextPath }/info/personalInfo.action','个人中心')"  title="个人中心">个人中心</a>
         <ul style="position:relative; bottom:30px;">
             <li><a href="#" title="修改密码">修改密码</a></li>
         </ul>

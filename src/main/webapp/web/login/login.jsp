@@ -31,7 +31,7 @@
     						用户名:
     					</td>
     					<td>
-    						<input type="text" id="name" name="name"/>
+    						<input type="text" id="name" name="name" placeholder="请输入用户名"/>
     					</td>
     					<td>
     						<span></span>
@@ -43,7 +43,7 @@
     						密   码:
     					</td>
     					<td>
-    						<input type="password" id="psd" name="psd"/>
+    						<input type="password" id="psd" name="psd" placeholder="请输入密码"/>
     					</td>
     					<td>
     						<span></span>
@@ -55,7 +55,7 @@
     						验证码:
     					</td>
     					<td>
-    						<input type="text" id="inputCode" />
+    						<input type="text" id="inputCode" placeholder="请输入验证码"/>
     					</td>
     					<td>
     						<div id="checkCode" class="code"  onclick="createCode(4)" ></div>
