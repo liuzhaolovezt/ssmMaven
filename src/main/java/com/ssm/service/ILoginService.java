@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ssm.model.NoticeCustom;
 import com.ssm.model.NoticeQueryVo;
+import com.ssm.model.TUser;
 
 public interface ILoginService {
 
@@ -13,7 +14,7 @@ public interface ILoginService {
 	 * @param psd 密码
 	 * @return 是否有此用户
 	 */
-	public boolean vaildLogin(String name,String psd); 
+	public TUser vaildLogin(String name,String psd); 
 	
 	
 }

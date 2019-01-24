@@ -1,5 +1,7 @@
 package com.ssm.service;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,15 +16,15 @@ public class LoginServiceImpl implements ILoginService {
 	@Autowired
 	private TUserMapper tUserMapper;
 	
-	public boolean vaildLogin(String name, String psd) {
-		boolean flag = false;
+	public TUser vaildLogin(String name, String psd) {
+		//boolean flag = false;
 		//打印日志
 		LOGER.info("name="+name+"psd="+psd);
-		int count = findByUserCount(name,psd);
-		if(count>0){
-			flag = true;
+		TUser tUser = findByUserCount(name,psd);
+		if(tUser!=null){
+			return tUser;
 		}
-		return flag;
+		return null;
 	}
 
 	/**
@@ -31,7 +33,7 @@ public class LoginServiceImpl implements ILoginService {
 	 * @param psd
 	 * @return
 	 */
-	private int findByUserCount(String name, String psd){
+	private TUser findByUserCount(String name, String psd){
 		TUser user = new TUser();
 		user.setUserName(name);
 		user.setUserPw(psd);
@@ -39,8 +41,8 @@ public class LoginServiceImpl implements ILoginService {
 		TUser list = tUserMapper.selectByPrimaryKey(name);
 		
 		if(list!=null&&psd.equals(list.getUserPw())){
-			return 1;
+			return list;
 		}
-		return 0;
+		return null;
 	}
 }

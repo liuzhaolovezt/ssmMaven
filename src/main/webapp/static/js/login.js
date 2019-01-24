@@ -46,7 +46,7 @@
         }
         else if (inputCode.toUpperCase() != checkCode.toUpperCase())
         {
-            alert("验证码输入有误！");
+            //alert("验证码输入有误！");
             createCode(4);
             return false;
         }

@@ -21,10 +21,20 @@ public class InfoController {
      * 跳转到personalInfo.jsp界面  
      */
 	private final String SHOWPERSONALINFO = "web/info/personalInfo";
+	 /**
+     * 跳转到updatePassword.jsp界面  
+     */
+	private final String SHOWUPDATEPASSWORD = "web/info/updatePassword";
 	
 	@RequestMapping("/showPersonalInfo")
 	public String showPersonalInfo(HttpServletRequest request){
 		
 		return SHOWPERSONALINFO;
+	}
+	
+	@RequestMapping("/showUpdatePassword")
+	public String showUpdatePassword(HttpServletRequest request){
+		
+		return SHOWUPDATEPASSWORD;
 	}
 }
