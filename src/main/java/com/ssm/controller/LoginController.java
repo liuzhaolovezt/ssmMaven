@@ -46,6 +46,7 @@ public class LoginController {
 			request.setAttribute("error", "没有这个员工！");
         	return LOGIN;
         }
+
 		//创建session对象
 		HttpSession session = request.getSession(); 
 		//把用户数据保存在session域对象中
@@ -62,6 +63,8 @@ public class LoginController {
 		session.setAttribute("LoginUserEml", user.getUserEml());
 		session.setAttribute("LoginUserDate", user.getUserDate());
 		session.setAttribute("LoginUserPho", user.getUserPho());
+		
+		session.setAttribute("LoginUser", user);
 		
 		return INDEX;
 	}

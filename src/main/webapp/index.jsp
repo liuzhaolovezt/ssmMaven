@@ -57,6 +57,7 @@
   <li><a href="#" title="设置" id="Setup"></a></li>
   <li><a href="javascript:location.reload();"title="刷新" id="refresh"></a></li>
   <li><a href="#" title="注销登录" id="logout"></a></li>
+<%--   <li><a href="#">${sessionScope["LoginUser"].userPw}</a></li> --%>
 </ul>
 </div>
 </div>
