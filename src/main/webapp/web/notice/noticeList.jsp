@@ -9,6 +9,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>OA管理平台</title>
+
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath }/static/css/global.css"
 	type="text/css" />
@@ -18,14 +19,20 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath }/static/css/menu.css"
 	type="text/css" />
+
 <script src="${pageContext.request.contextPath }/static/js/fixPNG.js"
-	type="text/javascript"></script>
-<script src="${pageContext.request.contextPath }/static/js/jquery.js"
 	type="text/javascript"></script>
 <script type="text/javascript"
 	src="${pageContext.request.contextPath }/static/js/artDialog/artDialog.js?skin=default"></script>
-
-
+<script src="${pageContext.request.contextPath }/static/js/jquery.js"
+	type="text/javascript"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath }/static/js/fancybox/jquery.fancybox-1.3.4.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath }/static/js/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/static/css/jquery.fancybox-1.3.4.css"
+	type="text/css">
 <script type="text/javascript">
 	/**判断字符是否为空的方法**/
 	function isEmpty(obj){
@@ -35,29 +42,41 @@
 	        return false;
 	    }
 	}
-		/**跳转页数**/
-		function goToPage(){
-		  var currPage=document.getElementById("currPage").value;
-		  //alert(${ pagerUtil.totalPage});
-		    var currPageTrim= currPage.replace(/(^\s*)|(\s*$)/g, ""); 
-		   if( isEmpty(currPageTrim)){
-			   art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'请输入正确的页数。', ok:true,});
-		       return ; 
-		   }
-		    var test1=/^[1-9]*$/;
-		    if(!test1.test(currPageTrim)){
-		          art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'输入页数有误。\n请重新输入', ok:true,});
-		          return ;
-		       }
-		  if(currPageTrim<=${ pagerUtil.totalPage}){
-			  window.location.href="${pageContext.request.contextPath}/notice/showNotice.action?currentPage="+currPageTrim;
-				 
-		  }else{
-			  art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'页数超出范围。\n请重新输入', ok:true,});
-		  }
-		 
-		 	
-		}
+	/**跳转页数**/
+	function goToPage(){
+	  var currPage=document.getElementById("currPage").value;
+	  //alert(${ pagerUtil.totalPage});
+	    var currPageTrim= currPage.replace(/(^\s*)|(\s*$)/g, ""); 
+	   if( isEmpty(currPageTrim)){
+		   art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'请输入正确的页数。', ok:true,});
+	       return ; 
+	   }
+	    var test1=/^[1-9]*$/;
+	    if(!test1.test(currPageTrim)){
+	          art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'输入页数有误。\n请重新输入', ok:true,});
+	          return ;
+	       }
+	  if(currPageTrim<=${ pagerUtil.totalPage}){
+		  window.location.href="${pageContext.request.contextPath}/notice/showNotice.action?currentPage="+currPageTrim;
+			 
+	  }else{
+		  art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'页数超出范围。\n请重新输入', ok:true,});
+	  }
+	}
+	
+	
+	$(document).ready(function() {
+		/*弹出框js  父页面使用fancybox弹出窗口设置type必须为iframe模式*/
+        $("#noticeAdd").fancybox({
+            'autoDimensions': false,
+            'centerOnScroll': true,
+            'scrolling': false,
+            'width': 990,
+            'height': 540,
+            'type':'iframe'
+        });
+	});
+		
 		
 		
 	</script>
@@ -77,7 +96,8 @@
 					<tr>
 						<td colspan="6" class="title">
 							<ul class="zsgc fleft">
-								<li><a href="#">新增</a></li>
+								<li><a id="noticeAdd"
+									href="${pageContext.request.contextPath }/web/notice/noticeAdd.jsp">新增</a></li>
 								<li><a href="#">删除</a></li>
 								<li><a href="#">修改</a></li>
 								<li><a href="#">编辑</a></li>
@@ -104,11 +124,11 @@
 						<td width="10%" align="center"><strong>发布时间</strong></td>
 
 					</tr>
-					<c:forEach items="${noticeList }" var="item">
+					<c:forEach items="${noticeList }" var="item" varStatus="stauts">
 						<tr class="line_g hover_bg">
 							<td width="5%" align="center"><input type="checkbox"
 								name="items_id" value="${item.noticeId}" /></td>
-							<td width="5%" align="center">${item.noticeId }</td>
+							<td width="5%" align="center">${stauts.count}</td>
 							<td width="6%" align="center"><c:if
 									test="${fn:length(item.noticeTitle)<='8'}">
 									<a href="${pageContext.request.contextPath }/index.jsp">
@@ -125,7 +145,8 @@
 					                   ${fn:substring(item.noticeCont,0,50)}...
 			                    </c:if></td>
 							<td width="10%" align="center">${item.userName }</td>
-							<td width="10%" align="center"><fmt:formatDate
+							<td width="10%" align="center">
+							<fmt:formatDate
 									value="${item.noticeTime}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
 
 							<%-- 	<td align="center"><a
@@ -136,12 +157,7 @@
 
 					<tr class="title">
 						<td colspan="6" valign="middle">
-							<ul class="zsgc fleft mt7">
-								<li><a href="#">新增</a></li>
-								<li><a href="#">删除</a></li>
-								<li><a href="#">修改</a></li>
-								<li><a href="#">编辑</a></li>
-							</ul>
+
 							<div class="page fright">
 								<ul>
 									<li>共<strong class="color_red">${ pagerUtil.totalRecord}</strong>条

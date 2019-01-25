@@ -8,7 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ssm.model.Notice;
@@ -27,6 +29,11 @@ public class NoticeController {
      * 跳转到noticeList.jsp界面  
      */
 	private final String SHOWNOTICE = "web/notice/noticeList";
+	
+	  /**
+     * 跳转到noticeAdd.jsp界面  
+     */
+	private final String AddNOTICE = "web/notice/noticeAdd";
   
 	/**
      * 跳转到getPrice.jsp界面
@@ -87,6 +94,21 @@ public class NoticeController {
 		request.setAttribute("noticeList", noticePageData.getData());
 		request.setAttribute("pagerUtil", noticePageData);
 		return SHOWNOTICE;
+	}
+    /**
+     * 添加公告
+     * @param record
+     * @return
+     */
+	@RequestMapping("/addNotice")
+	public String insertNotice(Model model, @ModelAttribute("notice") Notice notice) {
+		boolean flag= iNoticeService.insert(notice);
+		if(flag){
+			model.addAttribute("result", "success");
+		}else{
+			model.addAttribute("result", "false");
+		}
+		return AddNOTICE;
 	}
 	
 	

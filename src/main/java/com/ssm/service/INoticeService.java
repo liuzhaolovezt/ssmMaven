@@ -35,5 +35,11 @@ public interface INoticeService {
 	 * @return  PagerUtil
 	 */
 	public  PagerUtil findNoticePage(int currentPage);
+	/**
+	 * 添加
+	 * @param record
+	 * @return
+	 */
+	public  boolean insert(Notice record);
 	
 }

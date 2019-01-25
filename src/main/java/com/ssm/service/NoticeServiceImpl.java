@@ -1,5 +1,7 @@
 package com.ssm.service;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,6 +59,21 @@ public class NoticeServiceImpl implements INoticeService {
 		pagerUtil.setData(notice);
 		
 		return pagerUtil;
+	}
+
+	@Override
+	public boolean insert(Notice record) {
+    Calendar c=Calendar.getInstance();  
+	/*SimpleDateFormat f=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");    
+	        System.out.println(f.format(c.getTime())); 
+	        System.out.println(c.getTime().toString()); */
+	 record.setNoticeTime(c.getTime());   
+	 record.setNoticeScope("1,");
+	 int a=	noticeMapper.insert(record);
+	 if(a>=1){
+		 return true;
+	 }
+		return false;
 	}
 
 }
