@@ -1,5 +1,7 @@
 package com.ssm.controller;
 
+import java.text.SimpleDateFormat;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -46,6 +48,8 @@ public class LoginController {
 			request.setAttribute("error", "没有这个员工！");
         	return LOGIN;
         }
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		String dateString = formatter.format(user.getUserDate());
 
 		//创建session对象
 		HttpSession session = request.getSession(); 
@@ -63,6 +67,10 @@ public class LoginController {
 		session.setAttribute("LoginUserEml", user.getUserEml());
 		session.setAttribute("LoginUserDate", user.getUserDate());
 		session.setAttribute("LoginUserPho", user.getUserPho());
+		
+		System.err.println(user.getUserPho());
+		
+		session.setAttribute("Date", dateString);
 		
 		session.setAttribute("LoginUser", user);
 		

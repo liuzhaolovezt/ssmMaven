@@ -14,9 +14,9 @@
     	<div style="width: 60%; height: 60%;margin:  5% auto;">
     		<form class="form-horizontal">
 		  <div class="form-group">
-		    <label for="oldPassword" class="col-sm-2 control-label">原密码</label>
+		    <label for="oldPassword" class="col-sm-2 control-label">原密码${result}</label>
 		    <div class="col-sm-10">
-		      <input type="email" class="form-control" id="oldPassword" placeholder="请输入旧密码">
+		      <input type="text" class="form-control" id="oldPassword" placeholder="请输入旧密码">
 		    </div>
 		  </div>
 		  <div class="form-group">
